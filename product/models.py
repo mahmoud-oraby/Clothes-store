@@ -1,0 +1,41 @@
+from django.db import models
+from django.core.validators import MinValueValidator
+
+# Create your models here.
+class Color(models.Model):
+    name = models.CharField(max_length=32)
+    rgb = models.CharField(max_length=20)
+    
+    def __str__(self) -> str:
+        return self.name
+
+
+class Size(models.Model):
+    name = models.CharField(max_length=32)
+    
+    def __str__(self) -> str:
+        return self.name
+
+
+class Currency(models.Model):
+    name = models.CharField(max_length=10)
+    symbol = models.CharField(max_length=5)
+    
+    def __str__(self) -> str:
+        return self.name
+
+class Product(models.Model):
+    title = models.CharField(max_length=200,unique=True)
+    size = models.ManyToManyField(Size)
+    colors = models.ManyToManyField(Color)
+    image = models.ImageField(upload_to='uploads/images',null=True)
+    stock_number = models.PositiveIntegerField(validators=[MinValueValidator(10)],default=10)
+    price = models.DecimalField(max_digits=8,decimal_places=2)
+    description = models.TextField(max_length=800)
+    currency = models.ForeignKey(Currency,on_delete=models.CASCADE)
+    
+    def __str__(self) -> str:
+        return self.title
+
+
+
