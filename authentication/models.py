@@ -6,6 +6,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserManager(BaseUserManager):
     def create_user(self, first_name, last_name, email=None, password=None):
+        """
+        Create and save a new user with the given details.
+        """
         if email is None:
             raise TypeError('Users Should have a email')
         
@@ -16,6 +19,9 @@ class UserManager(BaseUserManager):
     
     
     def create_superuser(self, email, first_name, last_name, password=None,**kwargs):
+        """
+        Create and save a new superuser with the given details.
+        """
         if password is None:
             raise TypeError('Password Should not be none')
 
@@ -42,9 +48,15 @@ class User(AbstractBaseUser,PermissionsMixin):
     objects = UserManager()
 
     def __str__(self):
+        """
+        Return a string representation of the user (email address).
+        """
         return self.email
     
     def tokens(self):
+        """
+        Generate and return JWT tokens for the user.
+        """
         refresh = RefreshToken.for_user(self)
 
         return {

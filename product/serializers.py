@@ -30,10 +30,16 @@ class ProductSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
     
     def get_size(self, obj):
+        """
+        Get the list of sizes for a product.
+        """
         sizes = obj.size.all()
         return [size.name for size in sizes]
     
     def create(self, validated_data):
+        """
+        Create a product with associated colors, sizes, and currency.
+        """
         # Extract the color data from the validated data
         color_data = validated_data.pop('colors', [])
         size_data = validated_data.pop('size', [])

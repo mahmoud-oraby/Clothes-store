@@ -7,6 +7,9 @@ class Color(models.Model):
     rgb = models.CharField(max_length=20)
     
     def __str__(self) -> str:
+        """
+        Return a string representation of the name associated with the color.
+        """
         return self.name
 
 
@@ -14,6 +17,9 @@ class Size(models.Model):
     name = models.CharField(max_length=32)
     
     def __str__(self) -> str:
+        """
+        Return a string representation of the name associated with the size.
+        """
         return self.name
 
 
@@ -22,6 +28,9 @@ class Currency(models.Model):
     symbol = models.CharField(max_length=5)
     
     def __str__(self) -> str:
+        """
+        Return a string representation of the name associated with the currency.
+        """
         return self.name
 
 class Product(models.Model):
@@ -35,6 +44,9 @@ class Product(models.Model):
     currency = models.ForeignKey(Currency,on_delete=models.CASCADE)
     
     def __str__(self) -> str:
+        """
+        Return a string representation of the title associated with the product.
+        """
         return self.title
 
 

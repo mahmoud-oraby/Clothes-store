@@ -13,21 +13,32 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ['email','first_name','last_name','password'] 
     
     def validate_email(self,value):
+        """
+        Validate if the email is already registered.
+        """
         if User.objects.filter(email=value).exists():
             raise serializers.ValidationError({'path':'email','value':value,'message':'email already exist.'})
         return value
     
     def validate_first_name(self, value):
+        """
+        Validate that the first name contains only letters.
+        """
         if not value.isalpha():
             raise serializers.ValidationError('First name must contain only letters.')
         return value
     
     def validate_last_name(self, value):
+        """
+        Validate that the last name contains only letters.
+        """
         if not value.isalpha():
             raise serializers.ValidationError('Last name must contain only letters.')
         return value
     
     def create(self, validated_data):
+        """
+        Create and return a new User instance using the validated data.
+        """
         return User.objects.create_user(**validated_data)
-        #return {"success":"True"}
 

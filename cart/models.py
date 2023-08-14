@@ -9,6 +9,9 @@ class Cart(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self) -> str:
+        """
+        Return a string representation of the user associated with the cart.
+        """
         return str(self.user)
 
 class CartItem(models.Model):
@@ -17,10 +20,16 @@ class CartItem(models.Model):
     quantity = models.PositiveIntegerField(default=0)
 
     def save(self, *args, **kwargs):
+        """
+        Override the save method to update the product's stock number and save the cart item.
+        """
         self.product.stock_number -= self.quantity
         self.product.save()
         super().save(*args, **kwargs)
 
     def __str__(self) -> str:
+        """
+        Return a string representation of the cart item, including the associated product title and user.
+        """
         return f'{str(self.product.title)} - {str(self.cart.user)}'
 

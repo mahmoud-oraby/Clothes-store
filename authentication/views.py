@@ -8,6 +8,9 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
+        """
+        Override the base method to add custom claims to the token.
+        """
         token = super().get_token(user)
 
         # Add custom claims
@@ -16,9 +19,15 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
     
 class MyTokenObtainPairView(TokenObtainPairView):
+    """
+    Override the default TokenObtainPairView to use the custom serializer.
+    """
     serializer_class = MyTokenObtainPairSerializer
 
 class RegisterView(generics.ListCreateAPIView):
+    """
+    API view for user registration.
+    """
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]

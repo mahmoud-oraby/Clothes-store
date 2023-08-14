@@ -13,6 +13,9 @@ class CartSerializer(serializers.ModelSerializer):
     total_price = serializers.SerializerMethodField()
 
     def get_total_price(self,obj):
+        """
+        Calculate the total price of all cart items in the cart.
+        """
         total = 0
         for item in obj.cartitem_set.all():
             total += item.product.price * item.quantity
